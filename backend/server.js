@@ -11,11 +11,33 @@ app.use((req, res, next) => {
 app.use(express.static('public'));
 app.use(express.static('/node_modules/bootstrap/dist'));
 
-let connectedUsers = []; // This array will store the list of connected users.
+let connectedUsers = []; // This array will store the list of connected team members.
 let manager = {}; // this is the speaker variable
 let pageTitle = 'Pollz for Teamz';
-console.log(pageTitle)
+// console.log(pageTitle)
+let questions = [{ 
+    "q": "What can we do to improve your job satisfaction?",
+    "a": "Increase your salary",
+    "b": "Organize more team building activities",
+    "c": "Offer more on-the-job training",
+    "d": "None of the above"
+  },
+  { 
+  "q": "What type of boss do you prefer?",
+  "a": "Strict and bossy",
+  "b": "Soft and fuzzy",
+  "c": "Rude and threatening",
+  "d": "A weird mix of all of that"
+},
+{
+  "q": `How long do you think you will be in your current job?`,
+  "a": "5 Years",
+  "b": "3 Years",
+  "c": "6 Months",
+  "d": "You already left!"
+}
 
+];
 const server = app.listen(PORT, () => {
     console.log(`server alive on ${PORT}`)
 });
@@ -23,6 +45,7 @@ const server = app.listen(PORT, () => {
 const io = require('socket.io').listen(server); //socket.io listens at the express server port
 
 io.on('connection', (socket) => {
+
     socket.once('disconnected', () => {
        connectedUsers.splice(connectedUsers.indexOf(socket), 1);
        //This gives us the index of the current socket and then will remove it.
@@ -32,17 +55,18 @@ io.on('connection', (socket) => {
             manager.id = this.id;
             this.emit('joined', manager);
             console.log(`Poll started by ${manager.name}`)
-        })
-
-       socket.emit('welcome', () => { // emit is used to send a message to the client
-           title: pageTitle
-       });
-
-       socket.disconnect();
+        })   
+    //    socket.disconnect();
        console.log(`You've been disconnected!`)
     })
-
-    connectedUsers.push(socket) // When a connection happens on the front-end, I want to add them into my list of arrays.
+    connectedUsers.push(socket.id)
+    socket.emit('welcome', {title: pageTitle, users: connectedUsers, questions: questions, manager: manager}  // emit is used to send a message to the client
+      
+);
+  // When a connection happens on the front-end, I want to add them into my list of arrays.
+  console.log(questions)
+    console.log(connectedUsers)
     console.log(`Connected:`, connectedUsers.length);
     // console.log(connectedUsers)
 }); // when a socket connection happens,  log the id.
+

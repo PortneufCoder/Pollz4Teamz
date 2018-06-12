@@ -10,11 +10,11 @@ class Header extends React.Component {
     
 
     render() {
-
+            // The title here should be coming from the backend.
         return (
            
             <div className="col-xs-10">
-            <h1>{this.props.title}</h1>
+            <h1 className="server-title">{this.props.title}</h1>
            
             </div>
         );

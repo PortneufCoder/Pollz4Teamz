@@ -16,14 +16,15 @@ class Manager extends React.Component {
                 <h1>Manager: {this.props.status}</h1>
                 <form action="javascript:void(0)" id="form" onSubmit={this.start}>
            
-            <label className="form-name">Poll Title</label>
+            <label className="form-name"></label>
             <input className="form-control"
             required
             ref="title"
             placeholder="What is this poll about..."/>
-            <button className="btn btn-primary">Register</button>
+            <button id="register" className="btn btn-primary">Register</button>
            
             </form>
+            
             </div>
         )
     }

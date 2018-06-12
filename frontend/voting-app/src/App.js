@@ -10,6 +10,7 @@ import Display from './components/Display';
 import { withAlert } from 'react-alert'
 import io from 'socket.io-client';
 import Join from './components/Join';
+import Questions from './components/Questions';
 
 class App extends Component {
 
@@ -18,15 +19,21 @@ class App extends Component {
     //The initial state is disconnected(so there is only initially a user when the page loads), then when the app is rendered,
     //it switches to connected.
     title: '',
-    manager: {}
+    manager: {},
+    users: null,
+    questions: []
+
 
   }
+
+
 
   componentWillMount() {
     this.socket = io('http://localhost:8083');
     this.socket.on('connect', this.connect);
     this.socket.on('disconnect', this.disconnect);
-    this.socket.on('welcome', this.isLoggedIn)
+    this.socket.on('welcome', this.isLoggedIn);
+    this.socket.on('start', this.joined);
   }
 
   
@@ -44,6 +51,7 @@ class App extends Component {
 
   joined = (manager) => {
     sessionStorage.manager = JSON.stringify(manager)
+    console.log(manager)
     this.setState({
       manager: manager
     });
@@ -58,20 +66,22 @@ class App extends Component {
   }
   
   isLoggedIn = (fromServer) => {
+    console.log(fromServer)
     this.setState ({ // Trying to get the pageTitle I set in the server
-      title: fromServer.title
+      users: fromServer.users,
+      title: fromServer.title,
+      questions: fromServer.questions
+     
       
     })
     
   }
 
   render() {
-   
-
 
     return (
       <div className="container">
-      
+        <h2 id="live-members" class="navbar navbar-light bg-light">Live Members: {this.state.users ? this.state.users.length : "connecting..."}</h2>
         {/*The below should be rendering my page title but does not... why!!!*/}
         <Header 
         title={this.state.title} 
@@ -81,17 +91,21 @@ class App extends Component {
         <Team 
         {...this.state} //spread operator will pass whatever I got in state
          // emit fn passed down as properties to the children
+
          
         />
         <Manager 
         {...this.state} 
         />
+
         
         <Display
         {...this.state}
         
         />
-        
+        <Questions 
+        {...this.state}
+        />
 
       </div>
     );

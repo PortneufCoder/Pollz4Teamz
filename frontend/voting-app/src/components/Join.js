@@ -26,7 +26,7 @@ class Join extends React.Component {
             required
             ref="name"
             placeholder="Please enter your name..."/>
-            <button className="btn btn-dark">Join</button>
+            <button id="join" className="btn btn-dark">Join</button>
            
             </form>
            

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Provider as AlertProvider } from 'react-alert'
-import { Route, Router, Switch, Redirect } from 'react-router';
-import Errors from './components/Errors';
+import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
+import {ErrorsPage} from './components/Errors';
 import AlertTemplate from 'react-alert-template-basic'
 import './index.css';
 import App from './App';
@@ -20,7 +20,7 @@ const options = {
 }
 
 // let NotFoundRoute = Router.Errors;
-let Transfer = Router.Redirect;
+
 
 // Only way I could setup my routes the way I want,
 // was to move them here. I think its because of the way I changed my 
@@ -30,25 +30,21 @@ let Transfer = Router.Redirect;
 class Root extends Component  {
     render () {
       return ( // This component is handling my logged-in alerts.
-        <AlertProvider template={AlertTemplate} {...options}>
-          <App />
-        </AlertProvider>
+        <div>
+            <BrowserRouter>
+            <Switch >
+            <Route exact path="/" render={
+            () => (<AlertProvider template={AlertTemplate} {...options}>
+                <App />
+            </AlertProvider>)} />
+
+            <Route path="/" component={ErrorsPage} />
+            </ Switch>
+            </BrowserRouter>
+        </div>
       )
     }
   }
-
-  <Switch>
-      <Route 
-      path={`/`} // Currently the page goes straight to team which shows twice. Need to show only title first arrgghhh!
-      />
-    <Route // When the app loads, I want to first go to the manager Route
-     name="Manager" path={`/manager`}
-    />
-     <Route 
-    name="Team" exact path={`/team`}
-    />
-    <Transfer from="/*" to="Errors" /> 
-    </Switch> // I need to switch any invalid route to my error page.
 
 render(<Root />, document.getElementById('root'));
 

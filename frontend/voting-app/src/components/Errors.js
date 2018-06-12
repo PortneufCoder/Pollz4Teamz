@@ -1,24 +1,19 @@
 import React from 'react';
-import { Link } from 'react-dom';
+import { Link } from 'react-router-dom';
 
-class Errors extends React.Component {
+export const ErrorsPage = () => {
 
-    render () {
         return (
-            // This is the error handling page
-            <div>
+            <div className="error-page">
                 <h2>
                 <em>
-                   Sorry, this page does not exist... 
+                   Sorry, that page does not exist... 
                 </em>
                 </h2>
                 <p>If you are a Manager, go here:</p>
-                <Link to="/Manager">Join the Manager's page</Link>
+                <Link to="/">Join the Manager's page</Link>
                 <p>Regular Employee? Join here:</p>
-                <Link to ="/Team">Enter the team section</Link>
+                <Link to ="/">Enter the team section</Link>
             </div>
-        )
-    }
+            )
 }
-
-export default Errors;
