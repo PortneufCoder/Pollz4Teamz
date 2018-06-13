@@ -17,7 +17,7 @@ class Manager extends React.Component {
                 <form action="javascript:void(0)" id="form" onSubmit={this.start}>
            
             <label className="form-name"></label>
-            <input className="form-control"
+            <input className="form-control col-12"
             required
             ref="title"
             placeholder="What is this poll about..."/>

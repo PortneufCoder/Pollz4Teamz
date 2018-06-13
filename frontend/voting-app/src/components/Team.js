@@ -12,8 +12,9 @@ class Team extends React.Component {
             // Show the Join the session
             //If manager name is connected, show a question box...
             <div>
-                <Display if={this.props.users === !'connected'} >
+                <Display if={this.props.users === 'connected'} >
                 <h1>Join the session</h1> 
+                </Display>
 
                 <Display if={this.props.manager.name}> 
                 <p>Questions:</p>
@@ -23,7 +24,7 @@ class Team extends React.Component {
                 <h2>Start the polling</h2>
                 </Display>
 
-                </Display>
+               
 
                  <Join emit={this.props.emit}  />
 

@@ -81,7 +81,7 @@ class App extends Component {
 
     return (
       <div className="container">
-        <h2 id="live-members" class="navbar navbar-light bg-light">Live Members: {this.state.users ? this.state.users.length : "connecting..."}</h2>
+        <h2 id="live-members" class="navbar navbar-primary bg-primary">Live Members: {this.state.users ? this.state.users.length : "connecting..."}</h2>
         {/*The below should be rendering my page title but does not... why!!!*/}
         <Header 
         title={this.state.title} 

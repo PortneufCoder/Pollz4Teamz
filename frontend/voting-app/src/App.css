@@ -44,5 +44,23 @@ body {
 #live-members {
   font-size: 15px;
   font-weight: bold;
-  color: green;
+  color: whitesmoke;
+}
+
+#survey {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  margin-top: 80px;
+  padding-left: 20px;
+  margin-left: 178px;
+
+}
+
+.col-xs-12 col-sm-6 btn btn-primary {
+  margin-top: 80px;
+  display: flex;
+  justify-content: space-around;
+  
 }
