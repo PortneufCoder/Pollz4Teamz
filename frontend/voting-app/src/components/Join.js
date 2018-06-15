@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 class Join extends React.Component {
 
     state = {
-        fullName: 'Write your name',
+        fullName: 'Get Registered!',
         status: 'connected'
 
     }

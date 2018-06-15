@@ -3,7 +3,7 @@
 } */
 
 body {
-  background-color: #D5D9E8;
+  background-color: #5A565B;
 }
 
 /* Buttons */
@@ -47,7 +47,7 @@ body {
   color: whitesmoke;
 }
 
-#survey {
+#survey.btn btn-primary btn-primary {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -58,6 +58,10 @@ body {
 
 }
 
+.choice-buttons {
+  margin-right: 10px;
+}
+
 .col-xs-12 col-sm-6 btn btn-primary {
   margin-top: 80px;
   display: flex;
@@ -65,3 +69,30 @@ body {
   
 }
 
+.employee {
+  margin-top: 35px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.btn-group-vertical {
+  position: relative;
+  left: 5em;
+  display: flex;
+  justify-content: space-between;
+
+}
+ #a {
+   left: -5em;
+ }
+ #b {
+  left: -5em;
+}
+
+#c {
+  left: -5em;
+}
+
+#d {
+  left: -5em;
+}

@@ -1,15 +1,39 @@
 import React from 'react';
-import { Link } from 'react-router';
+const BarChart = require("react-chartjs-2").Bar;
 
 class Questions extends React.Component {
 
-    // ask = () => {
-    //     this.props.emit('ask', question)
-    // }
+    
     state = {
         questions: [],
         answers: [],
-        chosenQuestion: null
+        chosenQuestion: null,
+        data: {
+            scaleOverride:true,
+            scaleStartValue:0, 
+            labels: [],
+            datasets: [{
+                label: "Current Results",
+                borderWidth: 1,
+                data: [],
+                backgroundColor: [],
+                borderColor: [],
+                borderWidth: 1,
+                data: [],
+            }]
+        },
+       
+       
+        options: {
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
+        }
     }
 
     componentWillMount() {
@@ -23,103 +47,92 @@ class Questions extends React.Component {
         this.setState({ answers: answers })
     }
 
+    randomColor = () => {
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
     addChartData = (labels, data) => {
+        let questions = this.props.questions;
+        let question = questions.filter(question => question.q === this.state.chosenQuestion)[0];
+        let choices = Object.keys(question).map(key =>  question[key]);
+        let colors = Object.keys(question).map(key => this.randomColor());
+        choices.shift();
+
         this.setState({
             
     
-            chart: {
-                type: 'bar',
-                // The type of chart we want to create
-    
-    
-                // The data for our dataset
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: "My First dataset",
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        layout: { padding: { top: 25, bottom: 75, left: 75, right: 75 } },
-                        data: data
+            data:
+            {
+                
+                labels: choices,
+                datasets: [
+                    {
+                        label: `Current Results`,
+                        data: data,
+                        backgroundColor: colors
                     }]
-                }
-    
-    
             }
-    
-        })
+        }
+        );
     }
     
 
     sendAnswer = (choice) => {
-       console.log(choice)
-       console.log('string')
-       return;
+    
         this.props.socket.emit('questionAnswered', {
         
             q: this.state.chosenQuestion,
             choice: choice
-        })
-        this.props.socket.emit('getStatistics', {
-        
-            q: this.state.chosenQuestion,
-            choice: choice
-        }, (graphOutput) => {
+        },
+      (graphOutput) => {
             this.addChartData(graphOutput.graphLabels, graphOutput.graphValues)   
          })
        
     }
 
-    addChoice = (choice, text) => {
-        // console.log(choice)
-        // let buttonTypes = ['primary', 'success', 'warning', 'danger']
-        return (
-            //  <forminput type="radio" name="options" value={choice} />
-            
-             <button id={choice} onClick={this.sendAnswer(this)} className={`col-xs-12 col-sm-6 btn btn-primary`}> {text} </button>
+    addChoices = (question, index) => {
+        if(this.state.selection !== index)
+        return null;
+
+    let choices = Object.keys(question).map(key => [ key, question[key]]);
+    choices.shift();
+
+    choices.forEach(choice => {
+        this.state.questions.push(
+            <button id={choice[0]} onClick={() => this.sendAnswer(choice[0])} className={` btn btn-dark btn-large`}> {choice[1]} </button>
         )
+    });              
     }
 
 
-    selectChoice = (choice, selection) => event => {
+    selectChoice = (choice, index) => event => {
         event.preventDefault();
-        console.log(selection)
         this.setState({
-            selection: selection,
+            selection: index,
             chosenQuestion: choice.q
 
         })
        
     }
 
-    possibleAnswersButton = (answer, index) => {
-        let buttonTypes = ['primary', 'success', 'warning', 'danger']
-        return (
-            <button key={index} className={`col-xs-12 col-sm-6 btn btn-${buttonTypes}`}>
-                {answer}: {this.answers[answer]}
-            </button>
-        )
-    }
+    
 
-    addQuestion = (question, i) => {
+    addQuestion = (question, index) => {
+        this.state.questions = []
+        this.addChoices(question, index);
 
         return (
-            <div >
-                <form action="javascript:void(0)" id="form" onSubmit={this.selectChoice(question, i)}>
-
-                    <button id="survey" className="btn btn-dark">{question.q} </button>
-
-                    { this.state.selection === i ? 
-                         Object.keys(question).filter(key => {
-                            let isEqualQ = key !== "q";
-                            return isEqualQ;
-                        }
-                    )
-                    .map(key => this.addChoice(key, question[key]))
-                    //.map(text => this.addChoice(text))
-                    : null }
-                    {this.state.questions}
-
+            <div class="btn-group-vertical">
+                <form action="javascript:void(0)" id="form" onSubmit={this.selectChoice(question, index)}>
+                    <button id="survey" className="choice-buttons" className="btn btn-spacing btn-primary">{question.q}</button>
+                    <div class="btn-group-vertical">
+                        {this.state.questions}
+                    </div>
                 </form>
             </div>
         );
@@ -132,7 +145,7 @@ class Questions extends React.Component {
         // console.log(this.state.chosenQuestion)
 
         return (
-
+            <div>
             <div id="questions" className="row">
 
                 {
@@ -140,7 +153,8 @@ class Questions extends React.Component {
                 }
 
             </div>
-
+            <BarChart data={this.state.data} options={this.state.options} />
+                </div>
         )
     }
 

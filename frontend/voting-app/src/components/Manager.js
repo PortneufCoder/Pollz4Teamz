@@ -13,7 +13,7 @@ class Manager extends React.Component {
         return (
 
             <div>
-                <h1>Manager: {this.props.status}</h1>
+                <h1 className="employee">Employee: {this.props.status}</h1>
            
             
             </div>

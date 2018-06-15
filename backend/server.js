@@ -33,7 +33,7 @@ let clientAnswers = [{
     "c": 0,
     "d": 0
 }];
-let pageTitle = 'Pollz for Teamz';
+let pageTitle = 'Pollz 4 Teamz';
 // console.log(pageTitle)
 let questions = [{
     "q": "What can we do to improve your job satisfaction?",
@@ -91,7 +91,7 @@ io.on('connection', (socket) => {
  }); // when a socket connection happens,  log the id.
 
 io.on('connection', (socket) => {
-    socket.on('questionAnswered', (answer) => {
+    socket.on('questionAnswered', (answer, response) => {
         console.log(answer)
         for (let i = 0; i < clientAnswers.length; i++) {
             if (clientAnswers[i].q !== answer.q) {
@@ -99,54 +99,75 @@ io.on('connection', (socket) => {
             }
             let answers = clientAnswers[i]
             answers[answer.choice]++
-            console.log(answers[answer.choice])
-            console.log('annoying')
+            console.log(answers.q + " = " + answers[answer.choice])
+
+            let statistics = getStatistics(answers);
+            response(statistics);
+            return;
+           
         }
 
     });
 
-
-
+    getStatistics = (answers) => {
+        let pickedAnswers = Object.keys(answers).map(i => [i, answers[i]])
+        pickedAnswers.shift()
+    
+        console.log(pickedAnswers)
+    
+        let graphLabels = [];
+        let graphValues = [];
+    
+        for (let i = 0; i < pickedAnswers.length; i++) {
+            let key = pickedAnswers[i][0];
+            let value = pickedAnswers[i][1];
+            graphLabels.push(key);
+            graphValues.push(value);
+        }
+    
+        return { graphLabels: graphLabels, graphValues: graphValues };
+    }
+});
     // when a socket connection happens,  log the id.
 // });
 
 // io.on('connection', (socket) => {
 
 
-    socket.on('getStatistics', (answer, response) => {
-        console.log('statistics')
+//     socket.on('getStatistics', (answer, response) => {
+//         console.log('statistics')
 
-        for (let i = 0; i < clientAnswers.length; i++) {
-            if (clientAnswers[i].q !== answer.q) {
-                continue;
-            }
-            let answers = clientAnswers[i]
-            console.log(answers)
-            let pickedAnswers = Object.keys(answers).map(i => [i, answers[i]])
-            pickedAnswers.shift()
+//         for (let i = 0; i < clientAnswers.length; i++) {
+//             if (clientAnswers[i].q !== answer.q) {
+//                 continue;
+//             }
+//             let answers = clientAnswers[i]
+//             console.log(answers)
+//             let pickedAnswers = Object.keys(answers).map(i => [i, answers[i]])
+//             pickedAnswers.shift()
 
 
 
-            let graphLabels = [];
-            let graphValues = [];
-            console.log(pickedAnswers)
-            for (let i = 0; i < pickedAnswers.length; i++) {
-                let key = pickedAnswers[i][0]
-                let value = pickedAnswers[i][1]
-                graphLabels.push(key)
-                graphValues.push(value)
-            }
-            console.log(graphLabels)
-            console.log(graphValues)
+//             let graphLabels = [];
+//             let graphValues = [];
+//             console.log(pickedAnswers)
+//             for (let i = 0; i < pickedAnswers.length; i++) {
+//                 let key = pickedAnswers[i][0]
+//                 let value = pickedAnswers[i][1]
+//                 graphLabels.push(key)
+//                 graphValues.push(value)
+//             }
+//             console.log(graphLabels)
+//             console.log(graphValues)
 
-            response( { graphLabels: graphLabels, graphValues: graphValues }  // emit is used to send a message to the client
+//             response( { graphLabels: graphLabels, graphValues: graphValues }  // emit is used to send a message to the client
 
-            );
-        }
-    })
+//             );
+//         }
+//     })
 
-    // when a socket connection happens,  log the id.
-});
+//     // when a socket connection happens,  log the id.
+// });
 
 
 

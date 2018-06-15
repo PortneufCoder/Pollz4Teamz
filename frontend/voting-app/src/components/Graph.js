@@ -1,47 +1,47 @@
-import React from 'react';
-import { Chart } from 'chart.js';
-import { Pie, Line } from 'react-chartjs-2';
+// import React from 'react';
+// import { Chart } from 'chart.js';
+// import { Pie, Line } from 'react-chartjs-2';
 
 
-
-class Graph extends React.Component {
+// // 
+// class Graph extends React.Component {
   
-    render() {
-
-        console.log(this.props.socket)
-        console.log(this.props.users)
-
-
-        return (
+//     render() {
+// // 
+//         console.log(this.props.socket)
+//         console.log(this.props.users)
 
 
-            <div>
-                <canvas id="myChart" width="20" height="400"></canvas>
-                <Line
+//         return (
+
+
+//             <div>
+//                 <canvas id="myChart" width="20" height="400"></canvas>
+//                 <Line
                 
-                    data={this.props.chart}
-                    options= { {
-                        title: {
-                            display: true,
-                            text: 'Poll Results',
-                            fontSize: 30
-                        },
-                        legend: {
-                            display: true,
-                            position: 'center'
-                        }
-                    } }
-                    />
+//                     data={this.props.chart}
+//                     options= { {
+//                         title: {
+//                             display: true,
+//                             text: 'Poll Results',
+//                             fontSize: 30
+//                         },
+//                         legend: {
+//                             display: true,
+//                             position: 'center'
+//                         }
+//                     } }
+//                     />
                 
               
 
-            </div>
-        )
+//             </div>
+//         )
 
-    }
+//     }
 
 
 
-}
+// }
 
-export default Graph;
+// export default Graph;

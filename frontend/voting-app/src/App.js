@@ -12,8 +12,8 @@ import io from 'socket.io-client';
 import Join from './components/Join';
 import Questions from './components/Questions';
 import Graph from './components/Graph';
-import { Bar } from 'chart.js';
-import Chart from 'chart.js'
+
+const BarChart = require("react-chartjs-2").Bar;
 
 
 class App extends Component {
@@ -26,34 +26,8 @@ class App extends Component {
     manager: {},
     users: null,
     questions: [],
-    socket: null,
-    chart: {
-
-      // The data for our dataset
-      data: {
-          labels: ["January", "February", "March", "April", "May", "June", "July"],
-          datasets: [{
-              label: "My First dataset",
-              backgroundColor: 'rgb(255, 99, 132)',
-              borderColor: 'rgb(255, 99, 132)',
-              data: [0, 10, 5, 2, 20, 30, 45],
-          }],
-
-      },
-
-      options: { 
-          
-          title: {
-              display: true,
-              text: 'What is your warmest month?',
-              fontSize: 30
-          },
-          legend: {
-              display: true,
-              position: 'center'
-          }
-      }
-  }
+    socket: null
+   
 
   }
 
@@ -69,31 +43,7 @@ class App extends Component {
     
   }
 
-//   addChartData = () => {
-//     this.setState({
 
-//         chart: {
-//             type: 'bar',
-//             // The type of chart we want to create
-
-
-//             // The data for our dataset
-//             data: {
-//                 labels: ["Improvements", "Mentorship", "Loyalty"],
-//                 datasets: [{
-//                     label: "My First dataset",
-//                     backgroundColor: 'rgb(255, 99, 132)',
-//                     borderColor: 'rgb(255, 99, 132)',
-//                     layout: { padding: { top: 25, bottom: 75, left: 75, right: 75 } },
-//                     data: [0, 10, 5, 2, 20, 30, 45],
-//                 }]
-//             }
-
-
-//         }
-
-//     })
-// }
 
   
 
@@ -168,10 +118,7 @@ class App extends Component {
         {...this.state}
         />
 
-        <Graph 
-         {...this.state}
-         chart={this.state.chart.data} 
-        />
+       
 
       </div>
     );
