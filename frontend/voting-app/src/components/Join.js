@@ -3,7 +3,9 @@ import { Link } from 'react-router';
 class Join extends React.Component {
 
     state = {
-        fullName: 'Write your name'
+        fullName: 'Write your name',
+        status: 'connected'
+
     }
 
     form = React.createRef();
@@ -13,7 +15,7 @@ class Join extends React.Component {
         let teamMember = this.refs.name.value
         alert(`Thanks for joining ${teamMember}`)
         this.setState({
-            fullName: teamMember
+            fullName: `${teamMember} is ${this.state.status}`
         })
     }
 

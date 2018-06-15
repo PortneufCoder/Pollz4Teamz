@@ -6,6 +6,7 @@ import {ErrorsPage} from './components/Errors';
 import AlertTemplate from 'react-alert-template-basic'
 import './index.css';
 import App from './App';
+import Graph from './components/Graph';
 
 
 if (module.hot) {
@@ -39,6 +40,7 @@ class Root extends Component  {
             </AlertProvider>)} />
 
             <Route path="/" component={ErrorsPage} />
+            <Route path="/Graph" render={props => <Graph {...props} />}/>
             </ Switch>
             </BrowserRouter>
         </div>

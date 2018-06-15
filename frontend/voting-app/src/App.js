@@ -11,6 +11,10 @@ import { withAlert } from 'react-alert'
 import io from 'socket.io-client';
 import Join from './components/Join';
 import Questions from './components/Questions';
+import Graph from './components/Graph';
+import { Bar } from 'chart.js';
+import Chart from 'chart.js'
+
 
 class App extends Component {
 
@@ -21,25 +25,80 @@ class App extends Component {
     title: '',
     manager: {},
     users: null,
-    questions: []
+    questions: [],
+    socket: null,
+    chart: {
 
+      // The data for our dataset
+      data: {
+          labels: ["January", "February", "March", "April", "May", "June", "July"],
+          datasets: [{
+              label: "My First dataset",
+              backgroundColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(255, 99, 132)',
+              data: [0, 10, 5, 2, 20, 30, 45],
+          }],
+
+      },
+
+      options: { 
+          
+          title: {
+              display: true,
+              text: 'What is your warmest month?',
+              fontSize: 30
+          },
+          legend: {
+              display: true,
+              position: 'center'
+          }
+      }
+  }
 
   }
 
 
 
   componentWillMount() {
-    this.socket = io('http://localhost:8083');
-    this.socket.on('connect', this.connect);
-    this.socket.on('disconnect', this.disconnect);
-    this.socket.on('welcome', this.isLoggedIn);
-    this.socket.on('start', this.joined);
+    this.state.socket = io('http://localhost:8083');
+    this.state.socket.on('connect', this.connect);
+    this.state.socket.on('disconnect', this.disconnect);
+    this.state.socket.on('welcome', this.isLoggedIn);
+  
+   
+    
   }
+
+//   addChartData = () => {
+//     this.setState({
+
+//         chart: {
+//             type: 'bar',
+//             // The type of chart we want to create
+
+
+//             // The data for our dataset
+//             data: {
+//                 labels: ["Improvements", "Mentorship", "Loyalty"],
+//                 datasets: [{
+//                     label: "My First dataset",
+//                     backgroundColor: 'rgb(255, 99, 132)',
+//                     borderColor: 'rgb(255, 99, 132)',
+//                     layout: { padding: { top: 25, bottom: 75, left: 75, right: 75 } },
+//                     data: [0, 10, 5, 2, 20, 30, 45],
+//                 }]
+//             }
+
+
+//         }
+
+//     })
+// }
 
   
 
   connect = () => { // Function to handle initial connection.
-    this.props.alert.show(`Connection Successful: ${this.socket.id}`);
+    this.props.alert.show(`Connection Successful: ${this.state.socket.id}`);
     this.setState({
       status: 'connected'
       
@@ -59,7 +118,8 @@ class App extends Component {
 
   
 
-  disconnect = () => { // This will be the state when someone disconnects.
+  disconnect = () => { 
+    console.log()// This will be the state when someone disconnects.
     this.setState({
       status: 'disconnected'
     })
@@ -82,6 +142,7 @@ class App extends Component {
     return (
       <div className="container">
         <h2 id="live-members" class="navbar navbar-primary bg-primary">Live Members: {this.state.users ? this.state.users.length : "connecting..."}</h2>
+       
         {/*The below should be rendering my page title but does not... why!!!*/}
         <Header 
         title={this.state.title} 
@@ -105,6 +166,11 @@ class App extends Component {
         />
         <Questions 
         {...this.state}
+        />
+
+        <Graph 
+         {...this.state}
+         chart={this.state.chart.data} 
         />
 
       </div>

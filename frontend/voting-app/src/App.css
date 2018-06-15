@@ -1,5 +1,5 @@
 /* body {
-  background: url('./Images/fistbump_1.jpg');
+  background: url('./Images/illustration_textured_50.png');
 } */
 
 body {
@@ -28,7 +28,7 @@ body {
 /* Titles and Headings */
 .server-title {
   margin-top: 20px;
-  text-decoration: indianred;
+  font-family: cursive;
   font-size: 45px;
   text-align: center;
 }
@@ -64,3 +64,4 @@ body {
   justify-content: space-around;
   
 }
+
