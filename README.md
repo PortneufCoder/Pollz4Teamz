@@ -11,9 +11,9 @@ team leaders could quickly poll fellow employees on a specific issue.
 
 Key features:
 
-*User connects and name is registered.
-*Status of connection is sent from the server and actively displayed on page
-*Amount of connected members are logged to page, so a potential manager would know how many employees have 
+1. User connects and name is registered.
+2. Status of connection is sent from the server and actively displayed on page
+3. Amount of connected members are logged to page, so a potential manager would know how many employees have 
 ⋅accessed the survey
-*Once completed, the results of the poll are graphed onto a chart.
-*There is an error-handling route in case a user navigates to the wrong page.
+4. Once completed, the results of the poll are graphed onto a chart.
+5. There is an error-handling route in case a user navigates to the wrong page.
