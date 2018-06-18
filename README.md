@@ -11,7 +11,7 @@ team leaders could quickly poll fellow employees on a specific issue.
 
 Key features:
 
-⋅⋅*User connects and name is registered.
+*User connects and name is registered.
 ⋅⋅*Status of connection is sent from the server and actively displayed on page
 ⋅⋅*Amount of connected members are logged to page, so a potential manager would know how many employees have 
 ⋅⋅*accessed the survey
