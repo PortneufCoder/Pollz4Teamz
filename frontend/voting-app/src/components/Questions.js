@@ -18,7 +18,7 @@ class Questions extends React.Component {
                 data: [],
                 backgroundColor: [],
                 borderColor: [],
-                borderWidth: 1,
+                borderWidth: 4,
                 data: [],
             }]
         },
@@ -51,9 +51,9 @@ class Questions extends React.Component {
         let letters = '0123456789ABCDEF';
         let color = '#';
         for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
+          color += letters[Math.floor(Math.random() * 12)];
         }
-        return color;
+        return color; 
       }
 
     addChartData = (labels, data) => {

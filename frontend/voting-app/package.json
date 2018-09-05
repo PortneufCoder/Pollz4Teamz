@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "chart.js": "^2.7.2",
+    "npm": "^6.4.1",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
     "react-alert": "^4.0.4",

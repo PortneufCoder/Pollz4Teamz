@@ -110,10 +110,10 @@ class App extends Component {
         />
 
         
-        <Display
+        {/* <Display
         {...this.state}
         
-        />
+        /> */}
         <Questions 
         {...this.state}
         />

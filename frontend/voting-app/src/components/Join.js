@@ -15,7 +15,7 @@ class Join extends React.Component {
         let teamMember = this.refs.name.value
         alert(`Thanks for joining ${teamMember}`)
         this.setState({
-            fullName: `${teamMember} is ${this.state.status}`
+            fullName: `${teamMember} is ${this.state.status}!`
         })
     }
 

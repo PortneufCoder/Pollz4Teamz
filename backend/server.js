@@ -8,7 +8,7 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 app.use(express.static('/node_modules/bootstrap/dist'));
 
 let connectedUsers = []; // This array will store the list of connected team members.
@@ -128,46 +128,6 @@ io.on('connection', (socket) => {
         return { graphLabels: graphLabels, graphValues: graphValues };
     }
 });
-    // when a socket connection happens,  log the id.
-// });
-
-// io.on('connection', (socket) => {
-
-
-//     socket.on('getStatistics', (answer, response) => {
-//         console.log('statistics')
-
-//         for (let i = 0; i < clientAnswers.length; i++) {
-//             if (clientAnswers[i].q !== answer.q) {
-//                 continue;
-//             }
-//             let answers = clientAnswers[i]
-//             console.log(answers)
-//             let pickedAnswers = Object.keys(answers).map(i => [i, answers[i]])
-//             pickedAnswers.shift()
-
-
-
-//             let graphLabels = [];
-//             let graphValues = [];
-//             console.log(pickedAnswers)
-//             for (let i = 0; i < pickedAnswers.length; i++) {
-//                 let key = pickedAnswers[i][0]
-//                 let value = pickedAnswers[i][1]
-//                 graphLabels.push(key)
-//                 graphValues.push(value)
-//             }
-//             console.log(graphLabels)
-//             console.log(graphValues)
-
-//             response( { graphLabels: graphLabels, graphValues: graphValues }  // emit is used to send a message to the client
-
-//             );
-//         }
-//     })
-
-//     // when a socket connection happens,  log the id.
-// });
 
 
 

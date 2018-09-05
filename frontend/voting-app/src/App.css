@@ -47,20 +47,15 @@ body {
   color: whitesmoke;
 }
 
-#survey.btn btn-primary btn-primary {
+#survey.btn btn-spacing btn-primary {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  align-content: center;
+  justify-content: space-between;
   margin-top: 80px;
   padding-left: 20px;
   margin-left: 178px;
 
 }
 
-.choice-buttons {
-  margin-right: 10px;
-}
 
 .col-xs-12 col-sm-6 btn btn-primary {
   margin-top: 80px;
