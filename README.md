@@ -16,4 +16,4 @@ Key features:
 3. Amount of connected members are logged to page, so a potential manager would know how many employees have 
 ⋅accessed the survey
 4. Once completed, the results of the poll are graphed onto a chart.
-5. There is an error-handling route in case a user navigates to the wrong page.
+5. There is an error-handling route in case a user navigates to the wrong page. 
