@@ -1,5 +1,5 @@
 import React from 'react';
-import Display from './Display.js';
+//import Display from './Display';
 import Join from './Join.js';
 import Manager from './Manager.js'
 

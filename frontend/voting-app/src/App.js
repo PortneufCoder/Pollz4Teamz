@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import './App.css';
 import Header from './components/Header';
-import Team from './components/Team';
+//import Team from './components/Team';
 import Manager from './components/Manager';
 import Errors from './components/Errors';
 import HStyle from './components/HStyle.css';
-import Display from './components/Display';
 import { withAlert } from 'react-alert'
 import io from 'socket.io-client';
 import Join from './components/Join';
@@ -98,22 +97,12 @@ class App extends Component {
         title={this.state.title} 
         status={this.state.status} 
         />
-         
-        <Team 
-        {...this.state} //spread operator will pass whatever I got in state
-         // emit fn passed down as properties to the children
 
-         
-        />
         <Manager 
         {...this.state} 
         />
 
-        
-        {/* <Display
-        {...this.state}
-        
-        /> */}
+  
         <Questions 
         {...this.state}
         />
