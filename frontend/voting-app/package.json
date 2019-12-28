@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "chart.js": "^2.8.0",
+    "handlebars": "^4.5.3",
     "js-yaml": "^3.13.1",
     "npm": "^6.13.4",
     "prop-types": "^15.7.2",
