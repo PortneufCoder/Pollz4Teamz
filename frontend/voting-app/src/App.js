@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Manager from './components/Manager';
 import Errors from './components/Errors';
 import HStyle from './components/HStyle.css';
-import { withAlert } from 'react-alert'
+import { withAlert } from 'react-alert';
 import io from 'socket.io-client';
 import Join from './components/Join';
 import Questions from './components/Questions';

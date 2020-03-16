@@ -33,13 +33,13 @@ class Root extends Component  {
       return ( // This component is handling my logged-in alerts.
         <div>
             <BrowserRouter>
-            <Switch >
+            <Switch>
             <Route exact path="/" render={
             () => (<AlertProvider template={AlertTemplate} {...options}>
                 <App />
             </AlertProvider>)} />
 
-            <Route path="/" component={ErrorsPage} />
+            <Route path="/" component={ ErrorsPage } />
             <Route path="/Graph" render={props => <Graph {...props} />}/>
             </ Switch>
             </BrowserRouter>
