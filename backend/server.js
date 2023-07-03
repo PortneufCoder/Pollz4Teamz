@@ -70,15 +70,11 @@ io.on('connection', (socket) => {
         connectedUsers.splice(connectedUsers.indexOf(socket), 1);
         //This gives us the index of the current socket and then will remove it.
         // So the disconnected user is no longer part of list?
-
-
-
     })
 
 
     connectedUsers.push(socket.id)
     socket.emit('welcome', { title: pageTitle, users: connectedUsers, questions: questions }  // emit is used to send a message to the client
-
     );
 
 
