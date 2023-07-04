@@ -20,7 +20,7 @@ let clientAnswers = [{
     "d": 0
 },
 {
-    "q": "What type of boss do you prefer?",
+    "q": "How would you describe your preferred boss?",
     "a": 0,
     "b": 0,
     "c": 0,
