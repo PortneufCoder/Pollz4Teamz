@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router';
 import './App.css';
 import Header from './components/Header';
 //import Team from './components/Team';
 import Manager from './components/Manager';
-import Errors from './components/Errors';
-import HStyle from './components/HStyle.css';
-import { withAlert } from 'react-alert';
 import io from 'socket.io-client';
-import Join from './components/Join';
 import Questions from './components/Questions';
-import Graph from './components/Graph';
-
-const BarChart = require("react-chartjs-2").Bar;
+import { toast } from 'react-toastify';
 
 
 class App extends Component {
@@ -29,17 +22,23 @@ class App extends Component {
    
 
   }
+  componentDidMount() {
+    const socketUrl = (import.meta && import.meta.env && import.meta.env.VITE_SOCKET_URL) || 'http://localhost:8083';
+    const socket = io(socketUrl);
+    this.socket = socket;
+    socket.on('connect', this.connect);
+    socket.on('disconnect', this.disconnect);
+    socket.on('welcome', this.isLoggedIn);
+    this.setState({ socket });
+  }
 
-
-
-  componentWillMount() {
-    this.state.socket = io('http://localhost:8083');
-    this.state.socket.on('connect', this.connect);
-    this.state.socket.on('disconnect', this.disconnect);
-    this.state.socket.on('welcome', this.isLoggedIn);
-  
-   
-    
+  componentWillUnmount() {
+    if (this.socket) {
+      this.socket.off('connect', this.connect);
+      this.socket.off('disconnect', this.disconnect);
+      this.socket.off('welcome', this.isLoggedIn);
+      this.socket.disconnect();
+    }
   }
 
 
@@ -47,7 +46,8 @@ class App extends Component {
   
 
   connect = () => { // Function to handle initial connection.
-    this.props.alert.show(`Connection Successful: ${this.state.socket.id}`);
+    const socketId = this.socket ? this.socket.id : 'unknown';
+    toast.success(`Connection Successful: ${socketId}`);
     this.setState({
       status: 'connected'
       
@@ -90,7 +90,7 @@ class App extends Component {
 
     return (
       <div className="container">
-        <h2 id="live-members" class="navbar navbar-primary bg-primary">Live Members: {this.state.users ? this.state.users.length : "connecting..."}</h2>
+        <h2 id="live-members" className="navbar navbar-primary bg-primary">Live Members: {this.state.users ? this.state.users.length : "connecting..."}</h2>
        
         {/*The below should be rendering my page title but does not... why!!!*/}
         <Header 
@@ -98,14 +98,10 @@ class App extends Component {
         status={this.state.status} 
         />
 
-        <Manager 
-        {...this.state} 
-        />
+        <Manager {...this.state} />
 
   
-        <Questions 
-        {...this.state}
-        />
+        <Questions {...this.state} />
 
        
 
@@ -114,4 +110,4 @@ class App extends Component {
   }
 }
 
-export default withAlert(App);
+export default App;

@@ -1,25 +1,31 @@
 import React from 'react';
-const BarChart = require("react-chartjs-2").Bar;
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 class Questions extends React.Component {
 
     
     state = {
-        questions: [],
         answers: [],
         chosenQuestion: null,
         data: {
-            scaleOverride:true,
-            scaleStartValue:0, 
             labels: [],
             datasets: [{
                 label: "Current Results",
-                borderWidth: 1,
                 data: [],
                 backgroundColor: [],
                 borderColor: [],
-                borderWidth: 4,
-                data: [],
+                borderWidth: 1
             }]
         },
        
@@ -36,13 +42,12 @@ class Questions extends React.Component {
         }
     }
 
-    componentWillMount() {
-        this.possibleAnswers()
-
+    componentDidMount() {
+        this.possibleAnswers();
     }
 
     possibleAnswers = () => {
-        let answers = Object.keys(this.state.questions);
+        let answers = Object.keys(this.state.questions || {});
         answers.shift();
         this.setState({ answers: answers })
     }
@@ -57,8 +62,11 @@ class Questions extends React.Component {
       }
 
     addChartData = (labels, data) => {
-        let questions = this.props.questions;
+        let questions = this.props.questions || [];
         let question = questions.filter(question => question.q === this.state.chosenQuestion)[0];
+        if (!question) {
+            return;
+        }
         let choices = Object.keys(question).map(key =>  question[key]);
         let colors = Object.keys(question).map(key => this.randomColor());
         choices.shift();
@@ -83,30 +91,36 @@ class Questions extends React.Component {
     
 
     sendAnswer = (choice) => {
-    
+        if (!this.props.socket) {
+            return;
+        }
         this.props.socket.emit('questionAnswered', {
-        
             q: this.state.chosenQuestion,
             choice: choice
         },
-      (graphOutput) => {
-            this.addChartData(graphOutput.graphLabels, graphOutput.graphValues)   
-         })
-       
+        (graphOutput) => {
+            this.addChartData(graphOutput.graphLabels, graphOutput.graphValues);
+        });
     }
 
     addChoices = (question, index) => {
-        if(this.state.selection !== index)
-        return null;
+        if (this.state.selection !== index) {
+            return null;
+        }
 
-    let choices = Object.keys(question).map(key => [ key, question[key]]);
-    choices.shift();
+        let choices = Object.keys(question).map(key => [key, question[key]]);
+        choices.shift();
 
-    choices.forEach(choice => {
-        this.state.questions.push(
-            <button id={choice[0]} onClick={() => this.sendAnswer(choice[0])} className={` btn btn-dark btn-large`}> {choice[1]} </button>
-        )
-    });              
+        return choices.map((choice) => (
+            <button
+                key={choice[0]}
+                id={choice[0]}
+                onClick={() => this.sendAnswer(choice[0])}
+                className="btn btn-dark btn-large"
+            >
+                {choice[1]}
+            </button>
+        ));
     }
 
 
@@ -123,15 +137,12 @@ class Questions extends React.Component {
     
 
     addQuestion = (question, index) => {
-        this.state.questions = []
-        this.addChoices(question, index);
-
         return (
-            <div class="btn-group-vertical">
+            <div className="btn-group-vertical">
                 <form action="javascript:void(0)" id="form" onSubmit={this.selectChoice(question, index)}>
-                    <button id="survey" className="choice-buttons" className="btn btn-spacing btn-primary">{question.q}</button>
-                    <div class="btn-group-vertical">
-                        {this.state.questions}
+                    <button id="survey" className="btn btn-spacing btn-primary">{question.q}</button>
+                    <div className="btn-group-vertical">
+                        {this.addChoices(question, index)}
                     </div>
                 </form>
             </div>
@@ -143,17 +154,18 @@ class Questions extends React.Component {
     render() {
         // console.log(this.state)
         // console.log(this.state.chosenQuestion)
+        const questions = this.props.questions || [];
 
         return (
             <div>
             <div id="questions" className="row">
 
                 {
-                    this.props.questions.map(this.addQuestion)
+                    questions.map(this.addQuestion)
                 }
 
             </div>
-            <BarChart data={this.state.data} options={this.state.options} />
+            <Bar data={this.state.data} options={this.state.options} />
                 </div>
         )
     }

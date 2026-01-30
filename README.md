@@ -1,9 +1,13 @@
 # Pollz4Teamz
 My final capstone project during BrainStation
 
-##
-For the backend, you need to have: Nodejs, Express and Socket.io installed
-For the frontend, you need: React, React Router, Socket-io client, React-Alerts and Boostrap
+## Project structure
+- client/ (React app)
+- server/ (Express + Socket.io)
+
+## Requirements
+- Node.js 20.19+ (or 22.12+)
+- npm 9+
 
 ####
 This is a polling app that uses sockets to communicate data between the server and client. It provides a UI where
@@ -17,3 +21,19 @@ Key features:
 ⋅accessed the survey
 4. Once completed, the results of the poll are graphed onto a chart.
 5. There is an error-handling route in case a user navigates to the wrong page. 
+
+## Getting started
+From the repo root:
+
+1) Install server dependencies
+	- cd server
+	- npm install
+	- npm run dev
+
+2) Install client dependencies (in a new terminal)
+	- cd client
+	- npm install
+	- npm run dev
+
+## Environment
+The client can read the socket URL from `VITE_SOCKET_URL`.

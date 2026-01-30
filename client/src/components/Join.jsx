@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+
 class Join extends React.Component {
 
     state = {
@@ -8,11 +8,12 @@ class Join extends React.Component {
 
     }
 
-    form = React.createRef();
+    nameInput = React.createRef();
 
 
-    join = (ref) => { // This function stores the user's name and prints it on the page, thus identifying them during the session
-        let teamMember = this.refs.name.value
+    join = (event) => { // This function stores the user's name and prints it on the page, thus identifying them during the session
+        event.preventDefault();
+        const teamMember = this.nameInput.current?.value || '';
         alert(`Thanks for joining ${teamMember}`)
         this.setState({
             fullName: `${teamMember} is ${this.state.status}!`
@@ -30,7 +31,7 @@ class Join extends React.Component {
                     <label id="full-name" className="form-name">{this.state.fullName}</label>
                     <input className="form-control"
                         required
-                        ref="name"
+                        ref={this.nameInput}
                         placeholder="Please enter your name..." />
                     <button id="join" className="btn btn-dark">Join</button>
 
