@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import Header from './components/Header.jsx';
-//import Team from './components/Team.jsx';
 import Manager from './components/Manager.jsx';
 import io from 'socket.io-client';
 import Questions from './components/Questions.jsx';
