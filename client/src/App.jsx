@@ -85,24 +85,39 @@ class App extends Component {
   }
 
   render() {
+    const liveMembersText = this.state.users ? this.state.users.length : 'connecting...';
 
     return (
-      <div className="container">
-        <h2 id="live-members" className="navbar navbar-primary bg-primary">Live Members: {this.state.users ? this.state.users.length : "connecting..."}</h2>
+      <div className="app-shell">
+        <section className="app-status-bar" aria-label="Connection summary">
+          <p className="live-members" aria-live="polite" aria-atomic="true">
+            Live Members: {liveMembersText}
+          </p>
+        </section>
 
-        {/*The below should be rendering my page title but does not... why!!!*/}
-        <Header
-          title={this.state.title}
-          status={this.state.status}
-        />
+        <main className="app-grid" aria-label="Voting dashboard content">
+          <section className="app-card" aria-label="Session information">
+            <header className="app-card-header">
+              <h2 className="app-card-title">Session</h2>
+            </header>
+            <div className="app-card-body">
+              <Header
+                title={this.state.title}
+                status={this.state.status}
+              />
+              <Manager status={this.state.status} />
+            </div>
+          </section>
 
-        <Manager {...this.state} />
-
-
-        <Questions {...this.state} />
-
-
-
+          <section className="app-card" aria-label="Polling and chart results">
+            <header className="app-card-header">
+              <h2 className="app-card-title">Questions &amp; Live Results</h2>
+            </header>
+            <div className="app-card-body">
+              <Questions {...this.state} />
+            </div>
+          </section>
+        </main>
       </div>
     );
   }

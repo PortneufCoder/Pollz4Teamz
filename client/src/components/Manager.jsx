@@ -10,10 +10,17 @@ class Manager extends React.Component {
     // }
 
     render () {
+        const isConnected = this.props.status === 'connected';
+
         return (
 
             <div>
-                <h1 className="employee">Employee: {this.props.status}</h1>
+                <p className="employee-status">
+                    Employee status:
+                    <span className={`status-pill ${isConnected ? 'is-connected' : 'is-disconnected'}`}>
+                        {isConnected ? 'Connected' : 'Disconnected'}
+                    </span>
+                </p>
 
 
             </div>
